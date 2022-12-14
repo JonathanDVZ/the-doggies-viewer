@@ -1,48 +1,29 @@
 <!-- Please remove this file from your project -->
 <template>
   <b-container class="w-100 d-flex align-items-center flex-column">
-    <div class="browser d-flex align-items-center flex-column">
-      <b-img
-        thumbnail
-        fluid
-        rounded="circle"
-        :src="require('~/assets/images/the-doggies-avatar.jpg')"
-        alt="The Doggies avatar"
-        class="browser__image"
-      ></b-img>
-
-      <h2 class="browser__title my-4">The Doggies Explorer</h2>
-
-      <b-form v-if="connected" @submit="onSubmit">
-        <label for="input-live">Token ID</label>
-        <b-form-input
-          id="input-live"
-          v-model="tokenId"
-          aria-describedby="input-live-help input-live-feedback"
-          placeholder="Enter a token ID"
-          trim
-        ></b-form-input>
-        <b-button type="submit" variant="primary" class="mt-3" block>
-          Search
-        </b-button>
-      </b-form>
-      <b-button v-else variant="primary" @click="connect">Connect</b-button>
-    </div>
+    <Browser
+      :connected="connected"
+      @on-submit="onSubmit"
+      @on-connect="onConnect"
+    />
+    <NFTData v-if="nftData" :data="nftData" />
   </b-container>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import Web3, { callContract } from '../config/web3'
-import TheDoggiesArtifact from '../config/web3/artifacts/TheDoggies'
 
 export default {
-  name: 'NuxtTutorial',
+  name: 'ContentComponent',
   data() {
     return {
       connected: false,
-      tokenId: null,
       web3: null,
     }
+  },
+  computed: {
+    ...mapState(['nftData']),
   },
   mounted() {
     this.initialize()
@@ -55,17 +36,14 @@ export default {
         if (accounts.length > 0) this.connected = true
       }
     },
-    connect() {
+    onConnect() {
       if (window.ethereum) {
         this.web3.eth.requestAccounts().then(() => (this.connected = true))
       }
     },
-    async onSubmit($event) {
-      $event.preventDefault()
-      const response = await callContract()
-        .methods.tokenURI(this.tokenId)
-        .call()
-      console.log(response)
+    async onSubmit(tokenId) {
+      const urlWithData = await callContract().methods.tokenURI(tokenId).call()
+      this.$store.dispatch('getNftData', urlWithData)
     },
   },
 }
