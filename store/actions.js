@@ -77,4 +77,16 @@ export default {
       commit('setIsLoading', false)
     }
   },
+  async getTotalSupply({ commit }) {
+    try {
+      commit('setIsLoading', true)
+      const totalSupply = await callContract().methods.totalSupply().call()
+      commit('setTotalSupply', totalSupply)
+    } catch (error) {
+      commit('setNftData', {})
+      throw new Error(error)
+    } finally {
+      commit('setIsLoading', false)
+    }
+  },
 }

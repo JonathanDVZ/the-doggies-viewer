@@ -23,6 +23,9 @@
       <b-button type="submit" variant="primary" class="mt-3" block>
         Search
       </b-button>
+      <b-button variant="secondary" class="mt-3" block @click="onRandomSearch">
+        Search random Doggie
+      </b-button>
     </b-form>
     <b-button v-else variant="primary" @click="onConnect">Connect</b-button>
   </div>
@@ -46,9 +49,14 @@ export default {
     onSubmit($event) {
       $event.preventDefault()
       this.$emit('on-submit', this.tokenId)
+      this.tokenId = null
     },
     onConnect() {
-      this.$emit('on-connect', this.tokenId)
+      this.$emit('on-connect')
+    },
+    onRandomSearch() {
+      this.$emit('on-random-search')
+      this.tokenId = null
     },
   },
 }

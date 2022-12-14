@@ -3,4 +3,5 @@ export default () => ({
   nftData: {},
   owner: [],
   isLoading: false, // This state helps to show to the user a spinner when a request is in progress
+  totalSupply: 0,
 })
