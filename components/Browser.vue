@@ -1,5 +1,5 @@
 <template>
-  <div class="browser d-flex align-items-center flex-column">
+  <div class="browser d-flex align-items-center flex-column p-4 rounded">
     <b-img
       thumbnail
       fluid

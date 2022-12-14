@@ -1,49 +1,47 @@
 <!-- Please remove this file from your project -->
 <template>
-  <b-container class="w-100 d-flex align-items-center flex-column">
+  <b-container class="w-100 d-flex align-items-center flex-column my-4">
     <Browser
       :connected="connected"
       @on-submit="onSubmit"
       @on-connect="onConnect"
     />
-    <NFTData v-if="nftData" :data="nftData" />
+    <NFTData v-if="showNftData" :data="nftData" :owner="owner" />
   </b-container>
 </template>
 
 <script>
 import { mapState } from 'vuex'
-import Web3, { callContract } from '../config/web3'
 
 export default {
   name: 'ContentComponent',
   data() {
     return {
-      connected: false,
       web3: null,
     }
   },
   computed: {
-    ...mapState(['nftData']),
+    ...mapState(['accounts', 'nftData', 'owner']),
+    connected() {
+      return this.accounts.length > 0
+    },
+    showNftData() {
+      return this.connected && Object.keys(this.nftData).length > 0
+    },
   },
   mounted() {
     this.initialize()
   },
   methods: {
-    async initialize() {
-      if (window.ethereum) {
-        this.web3 = Web3(window.ethereum)
-        const accounts = await this.web3.eth.getAccounts()
-        if (accounts.length > 0) this.connected = true
-      }
+    initialize() {
+      this.$store.dispatch('getAccounts')
     },
     onConnect() {
-      if (window.ethereum) {
-        this.web3.eth.requestAccounts().then(() => (this.connected = true))
-      }
+      this.$store.dispatch('connectWallet')
     },
-    async onSubmit(tokenId) {
-      const urlWithData = await callContract().methods.tokenURI(tokenId).call()
-      this.$store.dispatch('getNftData', urlWithData)
+    onSubmit(tokenId) {
+      this.$store.dispatch('getNftData', tokenId)
+      this.$store.dispatch('getOwnerOf', tokenId)
     },
   },
 }

@@ -1,0 +1,48 @@
+.nftdata {
+  margin: 50px 0;
+  padding-top: 50px;
+  border-top: 2px solid #363c44;
+  &__text-container {
+    width: 400px;
+    background-color: #1d232a;
+    border: 2px solid #363c44;
+    @media all and (max-width: 768px) {
+      margin: 50px 0;
+    }
+  }
+  &__title {
+    font-size: 20px;
+  }
+  &__link {
+    color: #00b0ff;
+  }
+  &__text {
+    font-size: 14px;
+    text-align: left;
+    a {
+      color: #00b0ff;
+    }
+  }
+  &__iframe {
+    width: 350px;
+    height: 350px;
+  }
+  &__table {
+    color: #ffffff;
+    background-color: #1d232a;
+    overflow: hidden;
+    margin-top: 70px;
+    thead th {
+      border-bottom: 2px solid #363c44;
+    }
+    th {
+      border-top: 1px solid #363c44;
+    }
+    td {
+      border-top: 1px solid #363c44;
+    }
+    tr > th {
+      color: #00b0ff;
+    }
+  }
+}
