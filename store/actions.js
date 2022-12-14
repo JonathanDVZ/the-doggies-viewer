@@ -20,6 +20,7 @@ const accountsChanged = (commit, web3) => {
 export default {
   async connectWallet({ commit }) {
     try {
+      commit('setIsLoading', true)
       if (window.ethereum) {
         const web3 = Web3(window.ethereum)
         const accounts = await web3.eth.requestAccounts()
@@ -30,10 +31,13 @@ export default {
     } catch (error) {
       commit('setAccounts', [])
       throw new Error(error)
+    } finally {
+      commit('setIsLoading', false)
     }
   },
   async getAccounts({ commit }) {
     try {
+      commit('setIsLoading', true)
       if (window.ethereum) {
         const web3 = Web3(window.ethereum)
         const accounts = await web3.eth.getAccounts()
@@ -44,25 +48,33 @@ export default {
     } catch (error) {
       commit('setAccounts', [])
       throw new Error(error)
+    } finally {
+      commit('setIsLoading', false)
     }
   },
   async getNftData({ commit }, tokenId) {
     try {
+      commit('setIsLoading', true)
       const urlWithData = await callContract().methods.tokenURI(tokenId).call()
       const nftData = await this.$axios.$get(urlWithData)
       commit('setNftData', nftData)
     } catch (error) {
       commit('setNftData', {})
       throw new Error(error)
+    } finally {
+      commit('setIsLoading', false)
     }
   },
   async getOwnerOf({ commit }, tokenId) {
     try {
+      commit('setIsLoading', true)
       const address = await callContract().methods.ownerOf(tokenId).call()
       commit('setOwner', address)
     } catch (error) {
       commit('setNftData', {})
       throw new Error(error)
+    } finally {
+      commit('setIsLoading', false)
     }
   },
 }

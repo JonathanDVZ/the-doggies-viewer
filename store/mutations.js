@@ -8,4 +8,7 @@ export default {
   setOwner(state, payload) {
     state.owner = payload
   },
+  setIsLoading(state, payload) {
+    state.isLoading = payload
+  },
 }

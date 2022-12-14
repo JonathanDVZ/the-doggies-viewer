@@ -1,14 +1,15 @@
 <template>
-<div>
-  <Header />
-  <Content/>
-</div>
+  <div>
+    <Header />
+    <Content />
+    <SpinnerContainer />
+  </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 
 export default Vue.extend({
-  name: 'IndexPage'
+  name: 'IndexPage',
 })
 </script>
