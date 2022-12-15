@@ -67,12 +67,11 @@ export default {
         this.searchDone = false;
         await this.$store.dispatch('getNftData', tokenId);
         await this.$store.dispatch('getOwnerOf', tokenId);
-        this.searchedTokenId = tokenId;
       } catch (error) {
-        this.searchedTokenId = tokenId;
         // eslint-disable-next-line no-console
         console.error(error);
       } finally {
+        this.searchedTokenId = tokenId;
         this.searchDone = true;
       }
     },
