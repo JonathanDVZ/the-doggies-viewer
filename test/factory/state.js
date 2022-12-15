@@ -1,7 +1,7 @@
 export default {
   accounts: [],
   nftData: {},
-  owner: [],
+  owner: '',
   isLoading: false,
   totalSupply: 0
 };

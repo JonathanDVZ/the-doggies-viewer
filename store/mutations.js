@@ -1,17 +1,17 @@
 export default {
   setAccounts(state, payload) {
-    state.accounts = payload
+    state.accounts = payload;
   },
   setNftData(state, payload) {
-    state.nftData = payload
+    state.nftData = payload;
   },
   setOwner(state, payload) {
-    state.owner = payload
+    state.owner = payload;
   },
   setIsLoading(state, payload) {
-    state.isLoading = payload
+    state.isLoading = payload;
   },
   setTotalSupply(state, payload) {
-    state.totalSupply = payload
+    state.totalSupply = payload;
   }
-}
+};
