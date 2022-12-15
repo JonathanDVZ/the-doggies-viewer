@@ -8,6 +8,9 @@
       @on-random-search="onRandomSearch"
     />
     <NFTData v-if="showNftData" :data="nftData" :owner="owner" />
+    <div v-if="!showNftData && searchDone" class="mt-4">
+      There is no result for the token ID: <strong>{{ searchedTokenId }}</strong>
+    </div>
   </b-container>
 </template>
 
@@ -26,7 +29,8 @@ export default {
   },
   data() {
     return {
-      web3: null
+      searchDone: false,
+      searchedTokenId: null
     };
   },
   computed: {
@@ -43,23 +47,50 @@ export default {
   },
   methods: {
     initialize() {
-      this.$store.dispatch('getAccounts');
+      try {
+        this.$store.dispatch('getAccounts');
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error(error);
+      }
     },
     onConnect() {
-      this.$store.dispatch('connectWallet');
+      try {
+        this.$store.dispatch('connectWallet');
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error(error);
+      }
     },
-    onSubmit(tokenId) {
-      this.$store.dispatch('getNftData', tokenId);
-      this.$store.dispatch('getOwnerOf', tokenId);
+    async onSubmit(tokenId) {
+      try {
+        this.searchDone = false;
+        await this.$store.dispatch('getNftData', tokenId);
+        await this.$store.dispatch('getOwnerOf', tokenId);
+        this.searchedTokenId = tokenId;
+      } catch (error) {
+        this.searchedTokenId = null;
+        // eslint-disable-next-line no-console
+        console.error(error);
+      } finally {
+        this.searchDone = true;
+      }
     },
     async onRandomSearch() {
-      // The total supply is obtained to calculate the limit of the random number
-      await this.$store.dispatch('getTotalSupply');
-      // Now the random number can be calculated correctly
-      const randomTokenId = Math.floor(Math.random() * this.totalSupply);
+      try {
+        this.searchDone = false;
+        this.searchedTokenId = null;
+        // The total supply is obtained to calculate the limit of the random number
+        await this.$store.dispatch('getTotalSupply');
+        // Now the random number can be calculated correctly
+        const randomTokenId = Math.floor(Math.random() * this.totalSupply);
 
-      // onSubmit method can be use in this case
-      this.onSubmit(randomTokenId);
+        // onSubmit method can be use in this case
+        this.onSubmit(randomTokenId);
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error(error);
+      }
     }
   }
 };

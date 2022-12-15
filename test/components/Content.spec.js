@@ -4,7 +4,8 @@ import Content from '@/components/Content.vue';
 let testFactory = new Factory(Content, {
   data() {
     return {
-      web3: null
+      searchDone: false,
+      searchedTokenId: null
     };
   }
 });
@@ -46,7 +47,8 @@ describe('components/Content', () => {
       testFactory = new Factory(Content, {
         data() {
           return {
-            web3: null
+            searchDone: false,
+            searchedTokenId: null
           };
         },
         store: { state: { accounts: ['0x320D268d69C4b3f18584993b8DDF69fa185132EC'] } }
@@ -63,7 +65,8 @@ describe('components/Content', () => {
       testFactory = new Factory(Content, {
         data() {
           return {
-            web3: null
+            searchDone: false,
+            searchedTokenId: null
           };
         },
         store: {
