@@ -1,6 +1,6 @@
 <!-- Please remove this file from your project -->
 <template>
-  <b-container class="w-100 d-flex align-items-center flex-column my-4">
+  <b-container id="content" class="w-100 d-flex align-items-center flex-column my-4">
     <Browser
       :connected="connected"
       @on-submit="onSubmit"
@@ -12,43 +12,51 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState } from 'vuex';
+import { BContainer } from 'bootstrap-vue';
+import Browser from './Browser.vue';
+import NFTData from './NFTData.vue';
 
 export default {
   name: 'ContentComponent',
+  components: {
+    BContainer,
+    Browser,
+    NFTData
+  },
   data() {
     return {
-      web3: null,
-    }
+      web3: null
+    };
   },
   computed: {
     ...mapState(['accounts', 'nftData', 'owner', 'totalSupply']),
     connected() {
-      return this.accounts.length > 0
+      return this.accounts.length > 0;
     },
     showNftData() {
-      return this.connected && Object.keys(this.nftData).length > 0
-    },
+      return this.connected && Object.keys(this.nftData).length > 0;
+    }
   },
   mounted() {
-    this.initialize()
+    this.initialize();
   },
   methods: {
     initialize() {
-      this.$store.dispatch('getAccounts')
+      this.$store.dispatch('getAccounts');
     },
     onConnect() {
-      this.$store.dispatch('connectWallet')
+      this.$store.dispatch('connectWallet');
     },
     onSubmit(tokenId) {
-      this.$store.dispatch('getNftData', tokenId)
-      this.$store.dispatch('getOwnerOf', tokenId)
+      this.$store.dispatch('getNftData', tokenId);
+      this.$store.dispatch('getOwnerOf', tokenId);
     },
     async onRandomSearch() {
-      await this.$store.dispatch('getTotalSupply')
-      const randomTokenId = Math.floor(Math.random() * this.totalSupply)
-      this.onSubmit(randomTokenId)
-    },
-  },
-}
+      await this.$store.dispatch('getTotalSupply');
+      const randomTokenId = Math.floor(Math.random() * this.totalSupply);
+      this.onSubmit(randomTokenId);
+    }
+  }
+};
 </script>

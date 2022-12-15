@@ -20,9 +20,7 @@
         placeholder="Enter a token ID"
         trim
       ></b-form-input>
-      <b-button type="submit" variant="primary" class="mt-3" block>
-        Search
-      </b-button>
+      <b-button type="submit" variant="primary" class="mt-3" block> Search </b-button>
       <b-button variant="secondary" class="mt-3" block @click="onRandomSearch">
         Search random Doggie
       </b-button>
@@ -37,27 +35,27 @@ export default {
   props: {
     connected: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   data() {
     return {
-      tokenId: null,
-    }
+      tokenId: null
+    };
   },
   methods: {
     onSubmit($event) {
-      $event.preventDefault()
-      this.$emit('on-submit', this.tokenId)
-      this.tokenId = null
+      $event.preventDefault();
+      this.$emit('on-submit', this.tokenId);
+      this.tokenId = null;
     },
     onConnect() {
-      this.$emit('on-connect')
+      this.$emit('on-connect');
     },
     onRandomSearch() {
-      this.$emit('on-random-search')
-      this.tokenId = null
-    },
-  },
-}
+      this.$emit('on-random-search');
+      this.tokenId = null;
+    }
+  }
+};
 </script>

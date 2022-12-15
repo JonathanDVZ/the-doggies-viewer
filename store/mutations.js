@@ -13,5 +13,5 @@ export default {
   },
   setTotalSupply(state, payload) {
     state.totalSupply = payload
-  },
+  }
 }

@@ -88,5 +88,5 @@ export default {
     } finally {
       commit('setIsLoading', false)
     }
-  },
+  }
 }
