@@ -16,8 +16,18 @@
         </div>
       </b-col>
       <b-col md="6" class="d-flex justify-content-center">
-        <iframe title="Inline Frame Example" class="nftdata__iframe" :src="data.iframe_url">
-        </iframe>
+        <!-- 
+          I tried to add an iframe with the iframe_url but some laptops/deskptops get slow
+          <iframe title="Inline Frame Example" class="nftdata__preview" :src="data.iframe_url">
+          </iframe>
+        -->
+        <b-img
+          thumbnail
+          fluid
+          :src="data.image_url"
+          alt="NFT preview"
+          class="nftdata__preview"
+        ></b-img>
       </b-col>
     </b-row>
     <b-row class="w-100 m-0">
@@ -27,8 +37,11 @@
 </template>
 
 <script>
+import { BImg, BTable, BCol, BRow } from 'bootstrap-vue';
+
 export default {
   name: 'NFTData',
+  components: { BImg, BTable, BCol, BRow },
   props: {
     data: {
       type: Object,
