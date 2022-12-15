@@ -19,6 +19,7 @@
         aria-describedby="input-live-help input-live-feedback"
         placeholder="Enter a token ID"
         trim
+        autocomplete="off"
       ></b-form-input>
       <b-button type="submit" variant="primary" class="mt-3" block> Search </b-button>
       <b-button variant="secondary" class="mt-3" block @click="onRandomSearch">
