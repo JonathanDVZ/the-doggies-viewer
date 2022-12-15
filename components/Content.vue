@@ -69,7 +69,7 @@ export default {
         await this.$store.dispatch('getOwnerOf', tokenId);
         this.searchedTokenId = tokenId;
       } catch (error) {
-        this.searchedTokenId = null;
+        this.searchedTokenId = tokenId;
         // eslint-disable-next-line no-console
         console.error(error);
       } finally {
