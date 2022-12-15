@@ -53,8 +53,12 @@ export default {
       this.$store.dispatch('getOwnerOf', tokenId);
     },
     async onRandomSearch() {
+      // The total supply is obtained to calculate the limit of the random number
       await this.$store.dispatch('getTotalSupply');
+      // Now the random number can be calculated correctly
       const randomTokenId = Math.floor(Math.random() * this.totalSupply);
+
+      // onSubmit method can be use in this case
       this.onSubmit(randomTokenId);
     }
   }
